@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka1
+spec:
+
+  selector:
+    app: kafka1
+  ports:
+  - protocol: TCP
+    port: 8097
+    targetPort: 8097
+    nodePort: 30097
+  type: NodePort
+
+---
+# kafka2-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka2
+spec:
+  selector:
+    app: kafka2
+  ports:
+  - protocol: TCP
+    port: 8098
+    targetPort: 8098
+    nodePort: 30098
+  type: NodePort
+---
+# kafka3-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka3
+spec:
+  selector:
+    app: kafka3
+  ports:
+  - protocol: TCP
+    port: 8099
+    targetPort: 8099
+    nodePort: 30099
+  type: NodePort

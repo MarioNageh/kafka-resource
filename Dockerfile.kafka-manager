@@ -1,0 +1,22 @@
+FROM openjdk:8-jre
+
+# Set the version of Kafka Manager
+ARG KM_VERSION=3.0.0.6
+ENV KM_HOME /opt/kafka-manager-${KM_VERSION}
+
+WORKDIR /opt
+
+# Download and install Kafka Manager
+RUN wget "https://github.com/yahoo/kafka-manager/releases/download/${KM_VERSION}/cmak-${KM_VERSION}.zip" -O kafka-manager.zip && \
+    unzip kafka-manager.zip && \
+    rm kafka-manager.zip && \
+    mv cmak-${KM_VERSION} kafka-manager
+
+WORKDIR ${KM_HOME}
+
+
+RUN echo '#!/bin/bash' > docker-entrypoint.sh && \
+    echo './docker-entrypoint.sh -Dconfig.file=${KM_HOME}/conf/application.conf' >> docker-entrypoint.sh && \
+    chmod +x docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
